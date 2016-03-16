@@ -26,7 +26,7 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 	private final String takePictureAction = "takePicture";
 	private final String showCameraAction = "showCamera";
 	private final String hideCameraAction = "hideCamera";
-
+	private final String focusCameraAction = "focus";
 	private CameraActivity fragment;
 	private CallbackContext takePictureCallbackContext;
 	private int containerViewId = 1;
@@ -63,7 +63,18 @@ public class CameraPreview extends CordovaPlugin implements CameraActivity.Camer
 		    return switchCamera(args, callbackContext);
 	    }
 
+	    else if (focusCameraAction.equals(action)){
+            return focusCamera(args, callbackContext);
+        }
     	return false;
+    }
+    
+    private boolean focusCamera(final JSONArray args, CallbackContext callbackContext) {
+        if(fragment == null){
+            return false;
+        }
+        fragment.refocusCamera();
+        return true;
     }
 
 	private boolean startCamera(final JSONArray args, CallbackContext callbackContext) {
